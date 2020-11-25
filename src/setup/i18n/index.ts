@@ -15,7 +15,7 @@ const localeData: I18nOptions = {
   fallbackLocale: unref(getFallbackLocale),
   messages: localeMessages,
   availableLocales: unref(getAvailableLocales),
-  sync: true, //If you don’t want to inherit locale from global scope, you need to set sync of i18n component option to false.
+  sync: true, //If you don't want to inherit locale from global scope, you need to set sync of i18n component option to false.
   silentTranslationWarn: false, // true - warning off
   silentFallbackWarn: true,
 };

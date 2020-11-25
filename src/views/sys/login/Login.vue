@@ -90,7 +90,7 @@
       const globSetting = useGlobSetting();
       const { notification } = useMessage();
       const { t } = useI18n();
-
+      console.log(t('sys.login.accountPlaceholder'));
       // const openLoginVerifyRef = computed(() => appStore.getProjectConfig.openLoginVerify);
 
       const formData = reactive({
