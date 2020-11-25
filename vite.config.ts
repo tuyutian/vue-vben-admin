@@ -140,6 +140,7 @@ const viteConfig: UserConfig = {
   rollupInputOptions: {
     // TODO
     // external: VITE_USE_CDN ? externals : [],
+    external: ['vuex-module-decorators'],
     plugins: createRollupPlugin(),
   },
 };
