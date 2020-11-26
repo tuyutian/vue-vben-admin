@@ -5,7 +5,7 @@ import { resolve } from 'path';
 import { modifyVars } from './build/config/lessModifyVars';
 import { createProxy } from './build/vite/proxy';
 
-import globbyTransform from './build/vite/plugin/transform/globby';
+import globTransform from './build/vite/plugin/transform/globby';
 import dynamicImportTransform from './build/vite/plugin/transform/dynamic-import';
 
 import { isDevFn, loadEnv } from './build/utils';
@@ -148,7 +148,7 @@ const viteConfig: UserConfig = {
 export default {
   ...viteConfig,
   transforms: [
-    globbyTransform({
+    globTransform({
       resolvers: viteConfig.resolvers,
       root: viteConfig.root,
       alias: viteConfig.alias,
