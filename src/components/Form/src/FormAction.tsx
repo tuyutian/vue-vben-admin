@@ -2,14 +2,16 @@ import type { ColEx } from './types/index';
 
 import { defineComponent, unref, computed, PropType } from 'vue';
 import { Form, Col } from 'ant-design-vue';
-import Button from '/@/components/Button/index.vue';
+import { Button } from '/@/components/Button';
 import { BasicArrow } from '/@/components/Basic/index';
 
 import { getSlot } from '/@/utils/helper/tsxHelper';
+import { useI18n } from '/@/hooks/web/useI18n';
+
+const { t } = useI18n('component.form');
 
 export default defineComponent({
   name: 'BasicFormAction',
-  emits: ['toggle-advanced'],
   props: {
     show: {
       type: Boolean,
@@ -52,17 +54,18 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['toggle-advanced'],
   setup(props, { slots, emit }) {
     const getResetBtnOptionsRef = computed(() => {
       return {
-        text: '重置',
+        text: t('resetButton'),
         ...props.resetButtonOptions,
       };
     });
 
     const getSubmitBtnOptionsRef = computed(() => {
       return {
-        text: '查询',
+        text: t('submitButton'),
         // htmlType: 'submit',
         ...props.submitButtonOptions,
       };
@@ -108,8 +111,8 @@ export default defineComponent({
                     <Button type="default" class="mr-2" onClick={toggleAdvanced}>
                       {() => (
                         <>
-                          {isAdvanced ? '收起' : '展开'}
-                          <BasicArrow expand={!isAdvanced} />
+                          {isAdvanced ? t('putAway') : t('unfold')}
+                          <BasicArrow expand={!isAdvanced} top />
                         </>
                       )}
                     </Button>

@@ -1,11 +1,11 @@
-import { defineComponent, computed, unref } from 'vue';
-import { Dropdown, Menu, Divider } from 'ant-design-vue';
+import type { Trigger } from './types';
 
+import { defineComponent, computed, unref } from 'vue';
+import { Dropdown, Menu } from 'ant-design-vue';
 import Icon from '/@/components/Icon/index';
 
 import { basicDropdownProps } from './props';
 import { getSlot } from '/@/utils/helper/tsxHelper';
-import { Trigger } from './types';
 
 export default defineComponent({
   name: 'Dropdown',
@@ -15,7 +15,7 @@ export default defineComponent({
     const getMenuList = computed(() => props.dropMenuList);
 
     function handleClickMenu({ key }: any) {
-      const menu = unref(getMenuList).find((item) => item.event === key);
+      const menu = unref(getMenuList).find((item) => `${item.event}` === `${key}`);
       emit('menuEvent', menu);
     }
 
@@ -24,7 +24,7 @@ export default defineComponent({
         <Menu onClick={handleClickMenu} selectedKeys={props.selectedKeys}>
           {() => (
             <>
-              {unref(getMenuList).map((item, index) => {
+              {unref(getMenuList).map((item) => {
                 const { disabled, icon, text, divider, event } = item;
                 return [
                   <Menu.Item key={`${event}`} disabled={disabled}>
@@ -35,7 +35,8 @@ export default defineComponent({
                       </>
                     )}
                   </Menu.Item>,
-                  divider && <Divider key={`d-${index}`} />,
+                  // @ts-ignore
+                  divider && <Menu.Divider key={`d-${event}`} />,
                 ];
               })}
             </>

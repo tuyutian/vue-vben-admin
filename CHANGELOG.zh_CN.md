@@ -1,8 +1,36 @@
 ## Wip
 
+## (破坏性更新) Breaking changes
+
+- ClickOutSide 组件引入方式由 `import ClickOutSide from '/@/components/ClickOutSide/index.vue'`变更为`import { ClickOutSide } from '/@/components/ClickOutSide'`
+- Button 组件引入方式由 `import ClickOutSide from '/@/components/Button/index.vue'`变更为`import { Button } from '/@/components/Button'`
+- StrengthMeter 组件引入方式由 `import StrengthMeter from '/@/components/StrengthMeter'`变更为`import { StrengthMeter } from '/@/components/StrengthMeter'`
+- 除示例外加入全局国际化功能，支持中文与英文
+
+### ✨ Refactor
+
+- 重构整体 layout。更改代码实现方式。代码更精简
+- 配置项重构
+- 移除 messageSetting 配置
+- BasicTitle 组件 `showSpan`=> `span`
+
+### ✨ Features
+
+- 缓存可以配置是否加密,默认生产环境开启 Aes 加密
+- 新增标签页拖拽排序
+
+### 🐛 Bug Fixes
+
+- 修复 tree 文本超出挡住操作按钮问题
+- 修复通过 useRedo 刷新页面参数丢失问题
+- 修复表单校验先设置在校验及控制台错误信息问题
+
 ### 🎫 Chores
 
-- 移除 messageSetting 配置
+- 更新 antdv 到`2.0.0-rc.2`
+- 更新 vue 到`3.0.3`
+- 更新 vite 到`1.0.0.rc13`
+- 暂时删除 `@vueuse/core`.等稳定后在集成。目前不太稳定。
 
 ## 2.0.0-rc.11 (2020-11-18)
 

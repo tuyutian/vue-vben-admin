@@ -20,6 +20,9 @@ import { transformRouteToMenu } from '/@/utils/helper/menuHelper';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 // import { warn } from '/@/utils/log';
+import { useI18n } from '/@/hooks/web/useI18n';
+
+const { t } = useI18n('sys.app');
 
 const { createMessage } = useMessage();
 const NAME = 'permission';
@@ -97,16 +100,11 @@ class Permission extends VuexModule {
         if (!roles) return true;
         return roleList.some((role) => roles.includes(role));
       });
-      // this.commitRoutesState(routes);
-      // Background permissions
-      // warn(
-      //   `当前权限模式为:${PermissionModeEnum.ROLE},请将src/store/modules/permission.ts内的后台菜单获取函数注释,如果已注释可以忽略此信息!`
-      // );
       //  如果确定不需要做后台动态权限,请将下面整个判断注释
     } else if (permissionMode === PermissionModeEnum.BACK) {
       const messageKey = 'loadMenu';
       createMessage.loading({
-        content: '菜单加载中...',
+        content: t('menuLoading'),
         key: messageKey,
         duration: 1,
       });

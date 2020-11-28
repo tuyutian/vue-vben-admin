@@ -1,22 +1,14 @@
 import type { PropType } from 'vue';
 import type { Axis, ContextMenuItem } from './types';
-export const props = {
-  width: {
-    type: Number as PropType<number>,
-    default: 180,
-  },
+import { propTypes } from '/@/utils/propTypes';
+export const contextMenuProps = {
+  width: propTypes.number.def(156),
   customEvent: {
     type: Object as PropType<Event>,
     default: null,
   },
-  styles: {
-    type: Object as PropType<any>,
-    default: null,
-  },
-  showIcon: {
-    type: Boolean as PropType<boolean>,
-    default: true,
-  },
+  styles: propTypes.style,
+  showIcon: propTypes.bool.def(true),
   axis: {
     // The position of the right mouse button click
     type: Object as PropType<Axis>,
@@ -30,9 +22,5 @@ export const props = {
     default() {
       return [];
     },
-  },
-  resolve: {
-    type: Function as PropType<any>,
-    default: null,
   },
 };

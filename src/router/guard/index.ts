@@ -6,17 +6,18 @@ import { createProgressGuard } from './progressGuard';
 import { createPermissionGuard } from './permissionGuard';
 import { createPageLoadingGuard } from './pageLoadingGuard';
 
-import { useGlobSetting, useProjectSetting } from '/@/settings/use';
+import { useGlobSetting, useProjectSetting } from '/@/hooks/setting';
 
 import { getIsOpenTab, setCurrentTo } from '/@/utils/helper/routeHelper';
 import { setTitle } from '/@/utils/browser';
 import { AxiosCanceler } from '/@/utils/http/axios/axiosCancel';
 
 import { tabStore } from '/@/store/modules/tab';
+import { useI18n } from '/@/hooks/web/useI18n';
 
+const { closeMessageOnSwitch, removeAllHttpPending } = useProjectSetting();
 const globSetting = useGlobSetting();
 export function createGuard(router: Router) {
-  const { openNProgress, closeMessageOnSwitch, removeAllHttpPending } = useProjectSetting();
   let axiosCanceler: AxiosCanceler | null;
   if (removeAllHttpPending) {
     axiosCanceler = new AxiosCanceler();
@@ -44,7 +45,6 @@ export function createGuard(router: Router) {
         Modal.destroyAll();
         notification.destroy();
       }
-      // TODO Some special interfaces require long connections
       // Switching the route will delete the previous request
       removeAllHttpPending && axiosCanceler!.removeAllPending();
     } catch (error) {
@@ -55,10 +55,10 @@ export function createGuard(router: Router) {
   });
 
   router.afterEach((to) => {
+    const { t } = useI18n();
     // change html title
-    setTitle(to.meta.title, globSetting.title);
+    to.name !== 'Redirect' && setTitle(t(to.meta.title), globSetting.title);
   });
-
-  openNProgress && createProgressGuard(router);
+  createProgressGuard(router);
   createPermissionGuard(router);
 }

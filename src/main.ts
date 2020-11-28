@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import App from './App.vue';
 
 import router, { setupRouter } from '/@/router';
 import { setupStore } from '/@/store';
@@ -6,11 +7,8 @@ import { setupAntd } from '/@/setup/ant-design-vue';
 import { setupErrorHandle } from '/@/setup/error-handle';
 import { setupGlobDirectives } from '/@/setup/directives';
 import { setupI18n } from '/@/setup/i18n';
-
 import { setupProdMockServer } from '../mock/_createProductionServer';
 import { setApp } from '/@/setup/App';
-
-import App from './App.vue';
 
 import { isDevMode, isProdMode, isUseMock } from '/@/utils/env';
 
@@ -49,7 +47,7 @@ if (isDevMode()) {
   window.__APP__ = app;
 }
 
-// If you do not need to use the mock service in the production environment, you can comment the code
+// If you do not need to setting the mock service in the production environment, you can comment the code
 if (isProdMode() && isUseMock()) {
   setupProdMockServer();
 }

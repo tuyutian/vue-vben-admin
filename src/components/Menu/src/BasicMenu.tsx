@@ -1,19 +1,31 @@
+import './index.less';
+
 import type { MenuState } from './types';
 import type { Menu as MenuType } from '/@/router/types';
 
-import { computed, defineComponent, unref, reactive, watch, onMounted, ref, toRefs } from 'vue';
+import {
+  computed,
+  defineComponent,
+  unref,
+  reactive,
+  watch,
+  onMounted,
+  ref,
+  toRefs,
+  ComputedRef,
+} from 'vue';
 import { Menu } from 'ant-design-vue';
 import SearchInput from './SearchInput.vue';
 import MenuContent from './MenuContent';
+// import { ScrollContainer } from '/@/components/Container';
 
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
 import { ThemeEnum } from '/@/enums/appEnum';
 
-import { menuStore } from '/@/store/modules/menu';
 import { appStore } from '/@/store/modules/app';
 
-import { useSearchInput } from './useSearchInput';
-import { useOpenKeys } from './useOpenKeys';
+import { useSearchInput } from './hooks/useSearchInput';
+import { useOpenKeys } from './hooks/useOpenKeys';
 import { useRouter } from 'vue-router';
 
 import { isFunction } from '/@/utils/is';
@@ -23,7 +35,7 @@ import { menuHasChildren } from './helper';
 import { getCurrentParentPath } from '/@/router/menus';
 
 import { basicProps } from './props';
-import './index.less';
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 export default defineComponent({
   name: 'BasicMenu',
   props: basicProps,
@@ -33,12 +45,14 @@ export default defineComponent({
     const menuState = reactive<MenuState>({
       defaultSelectedKeys: [],
       mode: props.mode,
-      theme: computed(() => props.theme),
+      theme: computed(() => props.theme) as ComputedRef<ThemeEnum>,
       openKeys: [],
       searchValue: '',
       selectedKeys: [],
       collapsedOpenKeys: [],
     });
+
+    const { getCollapsed } = useMenuSetting();
     const { currentRoute } = useRouter();
 
     const { items, flatItems, isAppMenu, mode, accordion } = toRefs(props);
@@ -61,7 +75,7 @@ export default defineComponent({
 
     const getOpenKeys = computed(() => {
       if (props.isAppMenu) {
-        return menuStore.getCollapsedState ? menuState.collapsedOpenKeys : menuState.openKeys;
+        return unref(getCollapsed) ? menuState.collapsedOpenKeys : menuState.openKeys;
       }
       return menuState.openKeys;
     });
@@ -77,7 +91,7 @@ export default defineComponent({
         offset += 46;
       }
       return {
-        height: `calc(100% - ${offset - 12}px)`,
+        height: `calc(100% - ${offset}px)`,
         position: 'relative',
         overflowY: 'auto',
       };
@@ -95,20 +109,20 @@ export default defineComponent({
         cls.push('basic-menu__sidebar-hor');
       }
 
-      if (!props.isTop && props.isAppMenu && appStore.getProjectConfig.menuSetting.split) {
+      if (!props.isHorizontal && props.isAppMenu && appStore.getProjectConfig.menuSetting.split) {
         cls.push('basic-menu__second');
       }
       return cls;
     });
 
-    const showTitle = computed(() => props.collapsedShowTitle && menuStore.getCollapsedState);
+    const showTitle = computed(() => props.collapsedShowTitle && unref(getCollapsed));
 
     watch(
       () => currentRoute.value.name,
       (name: string) => {
         if (name === 'Redirect') return;
         handleMenuChange();
-        props.isTop && appStore.getProjectConfig.menuSetting.split && getParentPath();
+        props.isHorizontal && appStore.getProjectConfig.menuSetting.split && getParentPath();
       }
     );
 
@@ -180,7 +194,7 @@ export default defineComponent({
                 <MenuContent
                   item={menu}
                   level={index}
-                  isTop={props.isTop}
+                  isHorizontal={props.isHorizontal}
                   showTitle={unref(showTitle)}
                   searchValue={menuState.searchValue}
                 />,
@@ -196,7 +210,7 @@ export default defineComponent({
                   showTitle={unref(showTitle)}
                   item={menu}
                   level={index}
-                  isTop={props.isTop}
+                  isHorizontal={props.isHorizontal}
                   searchValue={menuState.searchValue}
                 />,
               ],
@@ -214,7 +228,7 @@ export default defineComponent({
       const inlineCollapsedObj = isInline
         ? props.isAppMenu
           ? {
-              inlineCollapsed: menuStore.getCollapsedState,
+              inlineCollapsed: unref(getCollapsed),
             }
           : { inlineCollapsed: props.inlineCollapsed }
         : {};
@@ -246,7 +260,6 @@ export default defineComponent({
     });
 
     return () => {
-      const { getCollapsedState } = menuStore;
       const { mode } = props;
       return mode === MenuModeEnum.HORIZONTAL ? (
         renderMenu()
@@ -258,9 +271,12 @@ export default defineComponent({
             theme={props.theme as ThemeEnum}
             onChange={handleInputChange}
             onClick={handleInputClick}
-            collapsed={getCollapsedState}
+            collapsed={unref(getCollapsed)}
           />
+
+          {/* <section style={unref(getMenuWrapStyle)}> */}
           <section style={unref(getMenuWrapStyle)} class="basic-menu__content">
+            {/* <ScrollContainer>{() => renderMenu()}</ScrollContainer> */}
             {renderMenu()}
           </section>
         </section>

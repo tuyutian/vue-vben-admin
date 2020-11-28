@@ -1,8 +1,9 @@
 import type { Menu as MenuType } from '/@/router/types';
-import type { PropType } from 'vue';
+import { computed, PropType, unref } from 'vue';
 
 import { defineComponent } from 'vue';
 import Icon from '/@/components/Icon/index';
+import { useI18n } from '/@/hooks/web/useI18n';
 
 export default defineComponent({
   name: 'MenuContent',
@@ -26,12 +27,19 @@ export default defineComponent({
       type: Number as PropType<number>,
       default: 0,
     },
-    isTop: {
+    isHorizontal: {
       type: Boolean as PropType<boolean>,
       default: true,
     },
   },
   setup(props) {
+    const { t } = useI18n();
+
+    const getI18nName = computed(() => {
+      const { name } = props.item;
+
+      return t(name);
+    });
     /**
      * @description: 渲染图标
      */
@@ -40,8 +48,8 @@ export default defineComponent({
     }
 
     function renderTag() {
-      const { item, showTitle, isTop } = props;
-      if (!item || showTitle || isTop) return null;
+      const { item, showTitle, isHorizontal } = props;
+      if (!item || showTitle || isHorizontal) return null;
 
       const { tag } = item;
       if (!tag) return null;
@@ -61,7 +69,8 @@ export default defineComponent({
         return null;
       }
       const { showTitle } = props;
-      const { name, icon } = props.item;
+      const { icon } = props.item;
+      const name = unref(getI18nName);
       const searchValue = props.searchValue || '';
       const index = name.indexOf(searchValue);
 

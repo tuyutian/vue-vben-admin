@@ -20,6 +20,7 @@ function handleError(e: Error) {
 export function useGo() {
   const { push, replace } = useRouter();
   function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
+    if (!opt) return;
     if (isString(opt)) {
       isReplace ? replace(opt).catch(handleError) : push(opt).catch(handleError);
     } else {
@@ -35,9 +36,12 @@ export function useGo() {
  */
 export const useRedo = () => {
   const { push, currentRoute } = useRouter();
+  const { query, params } = currentRoute.value;
   function redo() {
     push({
       path: '/redirect' + unref(currentRoute).fullPath,
+      query,
+      params,
     });
   }
   return redo;
