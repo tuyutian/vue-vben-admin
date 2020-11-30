@@ -1,4 +1,4 @@
-## Wip
+## 2.0.0-rc.12 (2020-11-30)
 
 ## (破坏性更新) Breaking changes
 
@@ -18,12 +18,21 @@
 
 - 缓存可以配置是否加密,默认生产环境开启 Aes 加密
 - 新增标签页拖拽排序
+- 新增 LayoutFooter.默认显示，可以在配置内关闭
+
+### ⚡ Performance Improvements
+
+- 优化`Modal`组件全屏动画不流畅问题
 
 ### 🐛 Bug Fixes
 
-- 修复 tree 文本超出挡住操作按钮问题
-- 修复通过 useRedo 刷新页面参数丢失问题
-- 修复表单校验先设置在校验及控制台错误信息问题
+- tree: 修复文本超出挡住操作按钮问题
+- useRedo: 修复通过 useRedo 刷新页面参数丢失问题
+- form: 修复表单校验先设置在校验及控制台错误信息问题
+- `modal`&`drawer` 修复组件传递数组参数问题
+- form: 修复`updateSchema`赋值含有`[]`时不生效
+- table: 修复表格 `TableAction` 图标显示问题
+- table: 修复表格列设置通过`setColumns`设置不显示
 
 ### 🎫 Chores
 

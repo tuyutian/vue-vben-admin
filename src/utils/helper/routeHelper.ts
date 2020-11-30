@@ -1,6 +1,6 @@
 import type { AppRouteModule, AppRouteRecordRaw, RouteModule } from '/@/router/types';
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { appStore } from '/@/store/modules/app';
 import { tabStore } from '/@/store/modules/tab';
@@ -34,7 +34,7 @@ export function genRouteModule(moduleList: AppRouteModule[] | AppRouteRecordRaw[
       routes = (routeMod.children as RouteRecordRaw[]) || ([] as RouteRecordRaw[]);
     }
 
-    const router = createRouter({ routes, history: createWebHistory() });
+    const router = createRouter({ routes, history: createWebHashHistory() });
 
     const flatList = (toRaw(router.getRoutes()).filter(
       (item) => item.children.length === 0

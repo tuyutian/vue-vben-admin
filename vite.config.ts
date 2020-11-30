@@ -5,7 +5,7 @@ import { resolve } from 'path';
 import { modifyVars } from './build/config/lessModifyVars';
 import { createProxy } from './build/vite/proxy';
 
-import globTransform from './build/vite/plugin/transform/globby';
+import globbyTransform from './build/vite/plugin/transform/globby';
 import dynamicImportTransform from './build/vite/plugin/transform/dynamic-import';
 
 import { isDevFn, loadEnv } from './build/utils';
@@ -89,7 +89,7 @@ const viteConfig: UserConfig = {
    * Transpile target for esbuild.
    * @default 'es2020'
    */
-  esbuildTarget: 'es2020',
+  esbuildTarget: 'es2019',
   /**
    * Whether to log asset info to console
    * @default false
@@ -148,7 +148,7 @@ const viteConfig: UserConfig = {
 export default {
   ...viteConfig,
   transforms: [
-    globTransform({
+    globbyTransform({
       resolvers: viteConfig.resolvers,
       root: viteConfig.root,
       alias: viteConfig.alias,
