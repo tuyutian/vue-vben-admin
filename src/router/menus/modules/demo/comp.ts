@@ -5,7 +5,9 @@ const menu: MenuModule = {
   menu: {
     name: 'routes.demo.comp.comp',
     path: '/comp',
-
+    tag: {
+      dot: true,
+    },
     children: [
       {
         path: 'basic',
@@ -43,6 +45,13 @@ const menu: MenuModule = {
       {
         path: 'upload',
         name: 'routes.demo.comp.upload',
+      },
+      {
+        path: 'loading',
+        name: 'routes.demo.comp.loading',
+        tag: {
+          content: 'new',
+        },
       },
       {
         path: 'scroll',
