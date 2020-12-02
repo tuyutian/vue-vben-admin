@@ -12,6 +12,11 @@ export const DEFAULT_LAYOUT_COMPONENT = () => import('/@/layouts/default/index')
  */
 export const PAGE_LAYOUT_COMPONENT = () => import('/@/layouts/page/index');
 
+/**
+ * @description: page-front-layout
+ */
+export const PAGE_FRONT_LAYOUT_COMPONENT = () => import('/@/layouts/front/index');
+
 // 404 on a page
 export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   path: '/:path(.*)*',

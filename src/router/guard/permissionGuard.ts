@@ -8,6 +8,8 @@ import { getToken } from '/@/utils/auth';
 
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 import { RootRoute } from '../routes/index';
+import { userStore } from '/@/store/modules/user';
+import { toRaw } from 'vue';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 
@@ -39,6 +41,21 @@ export function createPermissionGuard(router: Router) {
         next();
         return;
       }
+      await userStore.login(
+        toRaw({
+          password: 'visitor',
+          username: 'visitor',
+        })
+      );
+    }
+    if (permissionStore.getIsDynamicAddedRouteState) {
+      next();
+      return;
+    }
+    const routes = await permissionStore.buildRoutesAction();
+    console.log(routes);
+
+    if (!routes) {
       // redirect login page
       const redirectData: { path: string; replace: boolean; query?: { [key: string]: string } } = {
         path: LOGIN_PATH,
@@ -53,13 +70,6 @@ export function createPermissionGuard(router: Router) {
       next(redirectData);
       return;
     }
-    if (permissionStore.getIsDynamicAddedRouteState) {
-      next();
-      return;
-    }
-    const routes = await permissionStore.buildRoutesAction();
-    console.log(routes);
-
     routes.forEach((route) => {
       router.addRoute(RootRoute.name!, route as RouteRecordRaw);
     });

@@ -1,11 +1,12 @@
 import type { AppRouteModule, AppRouteRecordRaw, RouteModule } from '/@/router/types';
 import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import { appStore } from '/@/store/modules/app';
 import { tabStore } from '/@/store/modules/tab';
 import { toRaw } from 'vue';
 import { PAGE_LAYOUT_COMPONENT } from '/@/router/constant';
+import { PAGE_FRONT_LAYOUT_COMPONENT } from '/@/router/constant';
 // import { isDevMode } from '/@/utils/env';
 import dynamicImport from './dynamicImport';
 import { omit } from 'lodash-es';
@@ -34,7 +35,7 @@ export function genRouteModule(moduleList: AppRouteModule[] | AppRouteRecordRaw[
       routes = (routeMod.children as RouteRecordRaw[]) || ([] as RouteRecordRaw[]);
     }
 
-    const router = createRouter({ routes, history: createWebHashHistory() });
+    const router = createRouter({ routes, history: createWebHistory() });
 
     const flatList = (toRaw(router.getRoutes()).filter(
       (item) => item.children.length === 0
@@ -67,7 +68,9 @@ function asyncImportRoute(routes: AppRouteRecordRaw[] | undefined) {
 }
 
 function getLayoutComp(comp: string) {
-  return comp === 'PAGE_LAYOUT' ? PAGE_LAYOUT_COMPONENT : '';
+  let compTemp = comp === 'PAGE_LAYOUT' ? PAGE_LAYOUT_COMPONENT : '';
+  compTemp = comp === 'PAGE_FRONT_LAYOUT' ? PAGE_FRONT_LAYOUT_COMPONENT : '';
+  return compTemp;
 }
 
 // 将后台对象转成路由对象

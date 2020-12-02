@@ -106,6 +106,23 @@ const authRoute1 = {
   },
   children: [backRoute],
 };
+const backRoute2 = {
+  path: '/index',
+  name: 'Home',
+  component: '/home/index',
+  meta: {
+    icon: 'ant-design:home-outlined',
+    title: 'home.index.home',
+  },
+};
+const authRoute2 = {
+  path: '/home',
+  name: 'Home',
+  component: 'PAGE_FRONT_LAYOUT',
+  redirect: '/home/index',
+  children: [backRoute2],
+};
+
 export default [
   {
     url: '/api/getMenuListById',
@@ -118,6 +135,9 @@ export default [
       }
       if (id === '2') {
         return resultSuccess([dashboardRoute, authRoute1]);
+      }
+      if (id === '3') {
+        return resultSuccess([authRoute2]);
       }
     },
   },

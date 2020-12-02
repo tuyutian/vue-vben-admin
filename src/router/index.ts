@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 import type { App } from 'vue';
 
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import { createGuard } from './guard/';
 
@@ -10,7 +10,7 @@ import { scrollBehavior } from './scrollBehaviour';
 
 // app router
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: basicRoutes as RouteRecordRaw[],
   strict: true,
   scrollBehavior: scrollBehavior,

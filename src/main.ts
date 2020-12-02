@@ -10,7 +10,7 @@ import { setupI18n } from '/@/setup/i18n';
 import { setupProdMockServer } from '../mock/_createProductionServer';
 import { setApp } from '/@/setup/App';
 
-import { isDevMode, isProdMode, isUseMock } from '/@/utils/env';
+import { isDevMode, isUseMock } from '/@/utils/env';
 
 import '/@/design/index.less';
 
@@ -48,7 +48,7 @@ if (isDevMode()) {
 }
 
 // If you do not need to setting the mock service in the production environment, you can comment the code
-if (isProdMode() && isUseMock()) {
+if (isDevMode() && isUseMock()) {
   setupProdMockServer();
 }
 

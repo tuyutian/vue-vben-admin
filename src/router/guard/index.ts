@@ -56,6 +56,10 @@ export function createGuard(router: Router) {
 
   router.afterEach((to) => {
     const { t } = useI18n();
+    console.log(to.meta.title);
+
+    console.log(t(to.meta.title));
+
     // change html title
     to.name !== 'Redirect' && setTitle(t(to.meta.title), globSetting.title);
   });

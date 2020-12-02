@@ -1,6 +1,11 @@
 import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 
-import { DEFAULT_LAYOUT_COMPONENT, PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '../constant';
+import {
+  // DEFAULT_LAYOUT_COMPONENT,
+  PAGE_FRONT_LAYOUT_COMPONENT,
+  PAGE_NOT_FOUND_ROUTE,
+  REDIRECT_ROUTE,
+} from '../constant';
 import { genRouteModule } from '/@/utils/helper/routeHelper';
 import modules from 'globby!/@/router/routes/modules/**/*.@(ts)';
 
@@ -19,13 +24,12 @@ export const asyncRoutes = [
 // 主框架根路由
 export const RootRoute: AppRouteRecordRaw = {
   path: '/',
-  name: 'Root',
-  component: DEFAULT_LAYOUT_COMPONENT,
-  redirect: '/dashboard',
+  name: 'Home',
+  component: PAGE_FRONT_LAYOUT_COMPONENT,
+  redirect: '/home',
   meta: {
-    title: 'Root',
+    title: 'home.index.home',
   },
-  children: [],
 };
 
 export const LoginRoute: AppRouteRecordRaw = {

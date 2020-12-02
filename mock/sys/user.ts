@@ -27,6 +27,18 @@ function createFakeUserList() {
         value: 'test',
       },
     },
+    {
+      userId: '3',
+      username: 'visitor',
+      password: 'visitor',
+      realName: 'visitor',
+      desc: 'visitor',
+      token: 'fakeToken3',
+      role: {
+        roleName: 'Visitor',
+        value: 'visitor',
+      },
+    },
   ];
 }
 
