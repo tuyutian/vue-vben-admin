@@ -30,7 +30,6 @@ export const PAGE_FRONT_LAYOUT_COMPONENT = () => import('/@/layouts/front/index'
 export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   name: 'ErrorPage',
-  redirect: '/error/404',
   component: LAYOUT,
   meta: {
     title: 'ErrorPage',
@@ -38,7 +37,7 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/error/404',
+      path: '/:path(.*)*',
       name: 'ErrorPage',
       component: EXCEPTION_COMPONENT,
       meta: {
