@@ -17,6 +17,11 @@ export interface getMenuListByIdParams {
   id: number | string;
 }
 
+export interface getMenuListByParams {
+  id: number | string;
+  role: string;
+}
+
 /**
  * @description: Get menu return value
  */

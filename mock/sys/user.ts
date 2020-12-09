@@ -49,29 +49,29 @@ const fakeCodeList: any = {
 };
 export default [
   // mock user login
-  {
-    url: '/api/login',
-    timeout: 1000,
-    method: 'post',
-    response: ({ body }) => {
-      const { username, password } = body;
-      const checkUser = createFakeUserList().find(
-        (item) => item.username === username && password === item.password
-      );
-      if (!checkUser) {
-        return resultError('Incorrect account or password！');
-      }
-      const { userId, username: _username, token, realName, desc, role } = checkUser;
-      return resultSuccess({
-        role,
-        userId,
-        username: _username,
-        token,
-        realName,
-        desc,
-      });
-    },
-  },
+  // {
+  //   url: '/api/login',
+  //   timeout: 1000,
+  //   method: 'post',
+  //   response: ({ body }) => {
+  //     const { username, password } = body;
+  //     const checkUser = createFakeUserList().find(
+  //       (item) => item.username === username && password === item.password
+  //     );
+  //     if (!checkUser) {
+  //       return resultError('Incorrect account or password！');
+  //     }
+  //     const { userId, username: _username, token, realName, desc, role } = checkUser;
+  //     return resultSuccess({
+  //       role,
+  //       userId,
+  //       username: _username,
+  //       token,
+  //       realName,
+  //       desc,
+  //     });
+  //   },
+  // },
   {
     url: '/api/getUserInfoById',
     timeout: 200,
