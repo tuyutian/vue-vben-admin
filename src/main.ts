@@ -51,6 +51,5 @@ if (isDevMode()) {
 if (isDevMode() && isUseMock()) {
   setupProdMockServer();
 }
-
 // Used to share app instances in other modules
 setApp(app);
