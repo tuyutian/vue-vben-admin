@@ -1,4 +1,4 @@
-import type { MenuModule } from '/@/router/types.d';
+import type { MenuModule } from '/@/router/types';
 import { t } from '/@/hooks/web/useI18n';
 
 const menu: MenuModule = {
@@ -62,6 +62,7 @@ const menu: MenuModule = {
         path: 'error-log',
         name: t('routes.demo.feat.errorLog'),
       },
+
       {
         name: t('routes.demo.excel.excel'),
         path: 'excel',
