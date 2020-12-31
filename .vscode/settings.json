@@ -195,5 +195,6 @@
   "i18n-ally.enabledFrameworks": [
     "vue",
     "react"
-  ]
+],
+"stylelint.configBasedir": "./node_modules/stylelint-config-standard"
 }
