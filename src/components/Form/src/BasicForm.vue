@@ -18,10 +18,14 @@
         </FormItem>
       </template>
 
-      <FormAction
-        v-bind="{ ...getProps, ...advanceState }"
-        @toggle-advanced="handleToggleAdvanced"
-      />
+      <FormAction v-bind="{ ...getProps, ...advanceState }" @toggle-advanced="handleToggleAdvanced">
+        <template
+          #[item]="data"
+          v-for="item in ['resetBefore', 'submitBefore', 'advanceBefore', 'advanceAfter']"
+        >
+          <slot :name="item" v-bind="data" />
+        </template>
+      </FormAction>
       <slot name="formFooter" />
     </Row>
   </Form>
@@ -243,7 +247,6 @@
   });
 </script>
 <style lang="less">
-  @import (reference) '../../../design/index.less';
   @prefix-cls: ~'@{namespace}-basic-form';
 
   .@{prefix-cls} {
