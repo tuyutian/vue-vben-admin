@@ -12,7 +12,7 @@ import { userStore } from '/@/store/modules/user';
 import { asyncRoutes } from '/@/router/routes';
 import { filter } from '/@/utils/helper/treeHelper';
 import { toRaw } from 'vue';
-import { getMenuListById } from '/@/api/sys/menu';
+import { getUserMenuList } from '/@/api/sys/menu';
 
 import { transformObjToRoute } from '/@/router/helper/routeHelper';
 import { transformRouteToMenu } from '/@/router/helper/menuHelper';
@@ -25,6 +25,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 const { createMessage } = useMessage();
 const NAME = 'permission';
 hotModuleUnregisterModule(NAME);
+
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
   // Permission code list
@@ -110,17 +111,17 @@ class Permission extends VuexModule {
       if (!paramId) {
         throw new Error('paramId is undefined!');
       }
-      let routeList = (await getMenuListById({ id: paramId })) as AppRouteRecordRaw[];
-      console.log(routeList);
+      let routeList = (await getUserMenuList()) as AppRouteRecordRaw[];
 
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
       //  后台路由转菜单结构
       const backMenuList = transformRouteToMenu(routeList);
-
+      console.log(backMenuList);
       this.commitBackMenuListState(backMenuList);
 
       routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
+      console.log(routes);
     }
     return routes;
   }

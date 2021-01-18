@@ -23,15 +23,20 @@ export interface RoleInfo {
  */
 export interface LoginResultModel {
   userId: string | number;
-  token: string;
-  role: RoleInfo;
+  token: TokenModel;
+}
+
+export interface TokenModel {
+  access_token: string;
+  expire_time: string;
+  token_type: string;
 }
 
 /**
  * @description: Get user information return value
  */
 export interface GetUserInfoByUserIdModel {
-  role: RoleInfo;
+  role: string;
   // 用户id
   userId: string | number;
   // 用户名

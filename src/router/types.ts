@@ -45,6 +45,7 @@ export interface RouteMeta {
 export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   name: string;
   meta: RouteMeta;
+  menu?: ApiMenu;
   component?: Component | string;
   components?: Component;
   children?: AppRouteRecordRaw[];
@@ -55,6 +56,12 @@ export interface MenuTag {
   type?: 'primary' | 'error' | 'warn' | 'success';
   content?: string;
   dot?: boolean;
+}
+
+export interface ApiMenu {
+  disabled: boolean;
+  orderNo: number;
+  tag?: MenuTag;
 }
 
 export interface Menu {

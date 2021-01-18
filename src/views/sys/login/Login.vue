@@ -48,10 +48,11 @@
                 size="large"
                 class="rounded-sm"
                 :block="true"
-                @click="login"
                 :loading="formState.loading"
-                >{{ t('sys.login.loginButton') }}</a-button
+                @click="login"
               >
+                {{ t('sys.login.loginButton') }}
+              </a-button>
             </a-form-item>
           </a-form>
         </div>
@@ -95,7 +96,7 @@
       // const openLoginVerifyRef = computed(() => appStore.getProjectConfig.openLoginVerify);
 
       const formData = reactive({
-        account: 'vben',
+        account: '15979076441@163.com',
         password: '123456',
         // verify: undefined,
       });

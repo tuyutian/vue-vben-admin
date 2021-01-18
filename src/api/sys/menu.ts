@@ -7,7 +7,18 @@ import {
 } from './model/menuModel';
 
 enum Api {
-  GetMenuListById = '/getMenuListById',
+  GetUserMenuList = '/route',
+  GetMenuListById = '/route',
+}
+
+/**
+ * @description: Get user menu based on id
+ */
+export function getUserMenuList() {
+  return defHttp.request<getMenuListByIdParamsResultModel>({
+    url: Api.GetUserMenuList,
+    method: 'GET',
+  });
 }
 
 /**

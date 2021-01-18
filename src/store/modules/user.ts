@@ -1,8 +1,4 @@
-import type {
-  LoginParams,
-  GetUserInfoByUserIdModel,
-  GetUserInfoByUserIdParams,
-} from '/@/api/sys/model/userModel';
+import type { LoginParams, GetUserInfoByUserIdModel, TokenModel } from '/@/api/sys/model/userModel';
 
 import store from '/@/store/index';
 import { VuexModule, Module, getModule, Mutation, Action } from 'vuex-module-decorators';
@@ -16,7 +12,7 @@ import { useMessage } from '/@/hooks/web/useMessage';
 
 import router from '/@/router';
 
-import { loginApi, getUserInfoById } from '/@/api/sys/user';
+import { loginApi, getUserInfo } from '/@/api/sys/user';
 
 import { setLocal, getLocal, getSession, setSession } from '/@/utils/helper/persistent';
 import { useProjectSetting } from '/@/hooks/setting';
@@ -49,7 +45,7 @@ class User extends VuexModule {
   private userInfoState: UserInfo | null = null;
 
   // token
-  private tokenState = '';
+  private tokenState: TokenModel | null = null;
 
   // roleList
   private roleListState: RoleEnum[] = [];
@@ -58,8 +54,8 @@ class User extends VuexModule {
     return this.userInfoState || getCache<UserInfo>(USER_INFO_KEY) || {};
   }
 
-  get getTokenState(): string {
-    return this.tokenState || getCache<string>(TOKEN_KEY);
+  get getTokenState(): TokenModel {
+    return this.tokenState || getCache<TokenModel>(TOKEN_KEY) || {};
   }
 
   get getRoleListState(): RoleEnum[] {
@@ -69,7 +65,7 @@ class User extends VuexModule {
   @Mutation
   commitResetState(): void {
     this.userInfoState = null;
-    this.tokenState = '';
+    this.tokenState = null;
     this.roleListState = [];
   }
 
@@ -86,7 +82,7 @@ class User extends VuexModule {
   }
 
   @Mutation
-  commitTokenState(info: string): void {
+  commitTokenState(info: TokenModel): void {
     this.tokenState = info;
     setCache(TOKEN_KEY, info);
   }
@@ -104,15 +100,12 @@ class User extends VuexModule {
     try {
       const { goHome = true, mode, ...loginParams } = params;
       const data = await loginApi(loginParams, mode);
-
-      const { token, userId } = data;
-
+      const { token } = data;
       // save token
       this.commitTokenState(token);
 
       // get user info
-      const userInfo = await this.getUserInfoAction({ userId });
-
+      const userInfo = await this.getUserInfoAction();
       // const name = FULL_PAGE_NOT_FOUND_ROUTE.name;
       // name && router.removeRoute(name);
       goHome && (await router.replace(PageEnum.BASE_HOME));
@@ -123,10 +116,10 @@ class User extends VuexModule {
   }
 
   @Action
-  async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
-    const userInfo = await getUserInfoById({ userId });
+  async getUserInfoAction() {
+    const userInfo = await getUserInfo();
     const { role } = userInfo;
-    const roleList = [role.value] as RoleEnum[];
+    const roleList = [role] as RoleEnum[];
     this.commitUserInfoState(userInfo);
     this.commitRoleListState(roleList);
     return userInfo;
