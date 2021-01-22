@@ -82,6 +82,8 @@ export interface Menu {
   meta?: Partial<RouteMeta>;
 
   tag?: MenuTag;
+
+  hideMenu?: boolean;
 }
 
 export interface MenuModule {
