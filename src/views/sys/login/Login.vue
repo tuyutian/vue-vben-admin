@@ -35,7 +35,9 @@
               <a-col :span="12">
                 <a-form-item :style="{ 'text-align': 'right' }">
                   <!-- No logic, you need to deal with it yourself -->
-                  <a-button type="link" size="small">{{ t('sys.login.forgetPassword') }}</a-button>
+                  <a-button type="link" size="small">
+                    {{ t('sys.login.forgetPassword') }}
+                  </a-button>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -45,8 +47,8 @@
                 size="large"
                 class="rounded-sm"
                 :block="true"
-                :loading="formState.loading"
                 @click="login"
+                :loading="formState.loading"
               >
                 {{ t('sys.login.loginButton') }}
               </a-button>
