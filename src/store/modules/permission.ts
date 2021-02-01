@@ -25,7 +25,6 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 const { createMessage } = useMessage();
 const NAME = 'permission';
 hotModuleUnregisterModule(NAME);
-
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
   // Permission code list
@@ -83,9 +82,9 @@ class Permission extends VuexModule {
     this.backMenuListState = [];
     this.lastBuildMenuTimeState = 0;
   }
-
+  // id?: number | string
   @Action
-  async buildRoutesAction(id?: number | string): Promise<AppRouteRecordRaw[]> {
+  async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
     const { t } = useI18n();
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState);
@@ -107,21 +106,22 @@ class Permission extends VuexModule {
         duration: 1,
       });
       // 这里获取后台路由菜单逻辑自行修改
-      const paramId = id || userStore.getUserInfoState.userId;
+      // 原需要登录才行，现在有不登录的路由
+      /*const paramId = id || userStore.getUserInfoState.userId;
       if (!paramId) {
+        let routeList = (await getUserMenuList()) as AppRouteRecordRaw[];
         throw new Error('paramId is undefined!');
-      }
+      }*/
       let routeList = (await getUserMenuList()) as AppRouteRecordRaw[];
 
       // 动态引入组件
       routeList = transformObjToRoute(routeList);
       //  后台路由转菜单结构
       const backMenuList = transformRouteToMenu(routeList);
-      console.log(backMenuList);
+
       this.commitBackMenuListState(backMenuList);
 
       routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
-      console.log(routes);
     }
     return routes;
   }
