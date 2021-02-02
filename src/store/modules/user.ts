@@ -55,7 +55,7 @@ class User extends VuexModule {
   }
 
   get getTokenState(): TokenModel {
-    return this.tokenState || getCache<TokenModel>(TOKEN_KEY) || {};
+    return this.tokenState || getCache<TokenModel>(TOKEN_KEY) || false;
   }
 
   get getRoleListState(): RoleEnum[] {
