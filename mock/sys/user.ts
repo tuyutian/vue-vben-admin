@@ -10,10 +10,12 @@ function createFakeUserList() {
       desc: 'manager',
       password: '123456',
       token: 'fakeToken1',
-      role: {
-        roleName: 'Super Admin',
-        value: 'super',
-      },
+      roles: [
+        {
+          roleName: 'Super Admin',
+          value: 'super',
+        },
+      ],
     },
     {
       userId: '2',
@@ -22,10 +24,12 @@ function createFakeUserList() {
       realName: 'test user',
       desc: 'tester',
       token: 'fakeToken2',
-      role: {
-        roleName: 'Tester',
-        value: 'test',
-      },
+      roles: [
+        {
+          roleName: 'Tester',
+          value: 'test',
+        },
+      ],
     },
     {
       userId: '3',
@@ -63,7 +67,7 @@ export default [
   //     }
   //     const { userId, username: _username, token, realName, desc, role } = checkUser;
   //     return resultSuccess({
-  //       role,
+  //       roles,
   //       userId,
   //       username: _username,
   //       token,
@@ -74,7 +78,6 @@ export default [
   // },
   {
     url: '/api/getUserInfoById',
-    timeout: 200,
     method: 'get',
     response: ({ query }) => {
       const { userId } = query;

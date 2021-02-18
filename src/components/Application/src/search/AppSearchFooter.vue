@@ -1,31 +1,33 @@
 <template>
   <div :class="`${prefixCls}`">
     <span :class="`${prefixCls}__item`">
-      <g-icon icon="ant-design:enter-outlined" />
+      <Icon icon="ant-design:enter-outlined" />
     </span>
     <span>{{ t('component.app.toSearch') }}</span>
 
     <span :class="`${prefixCls}__item`">
-      <g-icon icon="bi:arrow-up" />
+      <Icon icon="bi:arrow-up" />
     </span>
     <span :class="`${prefixCls}__item`">
-      <g-icon icon="bi:arrow-down" />
+      <Icon icon="bi:arrow-down" />
     </span>
     <span>{{ t('component.app.toNavigate') }}</span>
     <span :class="`${prefixCls}__item`">
-      <g-icon icon="mdi:keyboard-esc" />
+      <Icon icon="mdi:keyboard-esc" />
     </span>
     <span>{{ t('common.closeText') }}</span>
   </div>
 </template>
+
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import Icon from '/@/components/Icon';
 
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useI18n } from '/@/hooks/web/useI18n';
   export default defineComponent({
     name: 'AppSearchFooter',
-    components: {},
+    components: { Icon },
     setup() {
       const { prefixCls } = useDesign('app-search-footer');
       const { t } = useI18n();
