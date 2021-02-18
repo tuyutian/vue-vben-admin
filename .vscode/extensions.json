@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "johnsoncodehk.volar",
     "octref.vetur",
     "dbaeumer.vscode-eslint",
     "stylelint.vscode-stylelint",
@@ -12,6 +13,7 @@
     "antfu.iconify",
     "mikestead.dotenv",
     "bradlc.vscode-tailwindcss",
-    "heybourn.headwind"
+    "heybourn.headwind",
+    "znck.vue-language-features"
   ]
 }
