@@ -36,7 +36,7 @@ export interface TokenModel {
  * @description: Get user information return value
  */
 export interface GetUserInfoByUserIdModel {
-  role: string;
+  roles: RoleInfo[];
   // 用户id
   userId: string | number;
   // 用户名

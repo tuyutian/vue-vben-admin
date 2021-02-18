@@ -116,10 +116,10 @@ class User extends VuexModule {
   }
 
   @Action
-  async getUserInfoAction() {
-    const userInfo = await getUserInfo();
-    const { role } = userInfo;
-    const roleList = [role] as RoleEnum[];
+  async getUserInfoAction({ userId }: GetUserInfoByUserIdParams) {
+    const userInfo = await getUserInfoById({ userId });
+    const { roles } = userInfo;
+    const roleList = roles.map((item) => item.value) as RoleEnum[];
     this.commitUserInfoState(userInfo);
     this.commitRoleListState(roleList);
     return userInfo;
