@@ -20,6 +20,7 @@ import { errorStore } from '/@/store/modules/error';
 import { errorResult } from './const';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { createNow, formatRequestDate } from './helper';
+import { userStore } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const prefix = globSetting.urlPrefix;
@@ -32,7 +33,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 处理请求数据
    */
-  transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
+  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { t } = useI18n();
     const { isTransformRequestResult } = options;
     // 不进行任何处理，直接返回

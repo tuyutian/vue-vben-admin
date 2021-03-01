@@ -10,7 +10,11 @@
     </template>
 
     <template #title v-if="!$slots.title">
-      <ModalHeader :helpMessage="getProps.helpMessage" :title="getMergeProps.title" />
+      <ModalHeader
+        :helpMessage="getProps.helpMessage"
+        :title="getMergeProps.title"
+        @dblclick="handleTitleDbClick"
+      />
     </template>
 
     <template #footer v-if="!$slots.footer">
@@ -28,7 +32,7 @@
       ref="modalWrapperRef"
       :loading="getProps.loading"
       :minHeight="getProps.minHeight"
-      :height="getProps.height"
+      :height="getWrapperHeight"
       :visible="visibleRef"
       :modalFooterHeight="footer !== undefined && !footer ? 0 : undefined"
       v-bind="omit(getProps.wrapperProps, 'visible', 'height')"
@@ -132,8 +136,19 @@
         }
       );
 
-      const getBindValue = computed((): any => {
-        return { ...attrs, ...unref(getProps) };
+      const getBindValue = computed(
+        (): Recordable => {
+          const attr = { ...attrs, ...unref(getProps) };
+          if (unref(fullScreenRef)) {
+            return omit(attr, 'height');
+          }
+          return attr;
+        }
+      );
+
+      const getWrapperHeight = computed(() => {
+        if (unref(fullScreenRef)) return undefined;
+        return unref(getProps).height;
       });
 
       watchEffect(() => {
@@ -193,6 +208,12 @@
         extHeightRef.value = height;
       }
 
+      function handleTitleDbClick(e: ChangeEvent) {
+        if (!props.canFullscreen) return;
+        e.stopPropagation();
+        handleFullScreen(e);
+      }
+
       return {
         handleCancel,
         getBindValue,
@@ -206,6 +227,8 @@
         modalWrapperRef,
         handleExtHeight,
         handleHeightChange,
+        handleTitleDbClick,
+        getWrapperHeight,
       };
     },
   });

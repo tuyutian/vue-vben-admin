@@ -42,7 +42,7 @@
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
       <AppLocalePicker
-        v-if="getShowLocale"
+        v-if="getShowLocalePicker"
         :reload="true"
         :showText="false"
         :class="`${prefixCls}-action__item`"
@@ -50,7 +50,7 @@
 
       <UserDropDown :theme="getHeaderTheme" />
 
-      <SettingDrawer v-if="getShowSettingButton" :class="`${prefixCls}-action__item`" />
+      <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
     </div>
   </Header>
 </template>
@@ -69,9 +69,9 @@
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
-  import { useLocaleSetting } from '/@/hooks/setting/useLocaleSetting';
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
+  import { SettingButtonPositionEnum } from '/@/enums/appEnum';
   import { AppLocalePicker } from '/@/components/Application';
 
   import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
@@ -79,6 +79,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import { useLocale } from '/@/locales/useLocale';
 
   export default defineComponent({
     name: 'LayoutHeader',
@@ -111,8 +112,11 @@
         getMenuWidth,
         getIsMixSidebar,
       } = useMenuSetting();
-      const { getShowLocale } = useLocaleSetting();
-      const { getUseErrorHandle, getShowSettingButton } = useRootSetting();
+      const {
+        getUseErrorHandle,
+        getShowSettingButton,
+        getSettingButtonPosition,
+      } = useRootSetting();
 
       const {
         getHeaderTheme,
@@ -122,7 +126,10 @@
         getShowContent,
         getShowBread,
         getShowHeaderLogo,
+        getShowHeader,
       } = useHeaderSetting();
+
+      const { getShowLocalePicker } = useLocale();
 
       const { getIsMobile } = useAppInject();
 
@@ -136,6 +143,18 @@
             [`${prefixCls}--${theme}`]: theme,
           },
         ];
+      });
+
+      const getShowSetting = computed(() => {
+        if (!unref(getShowSettingButton)) {
+          return false;
+        }
+        const settingButtonPosition = unref(getSettingButtonPosition);
+
+        if (settingButtonPosition === SettingButtonPositionEnum.AUTO) {
+          return unref(getShowHeader);
+        }
+        return settingButtonPosition === SettingButtonPositionEnum.HEADER;
       });
 
       const getLogoWidth = computed(() => {
@@ -167,7 +186,7 @@
         getSplit,
         getMenuMode,
         getShowTopMenu,
-        getShowLocale,
+        getShowLocalePicker,
         getShowFullScreen,
         getShowNotice,
         getUseLockPage,
@@ -175,6 +194,7 @@
         getLogoWidth,
         getIsMixSidebar,
         getShowSettingButton,
+        getShowSetting,
       };
     },
   });
