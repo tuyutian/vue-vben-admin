@@ -22,7 +22,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/constant';
 
 const { createMessage } = useMessage();
-const NAME = 'permission';
+const NAME = 'app-permission';
 hotModuleUnregisterModule(NAME);
 @Module({ dynamic: true, namespaced: true, store, name: NAME })
 class Permission extends VuexModule {
@@ -88,7 +88,7 @@ class Permission extends VuexModule {
     let routes: AppRouteRecordRaw[] = [];
     const roleList = toRaw(userStore.getRoleListState);
 
-    const { permissionMode } = appStore.getProjectConfig;
+    const { permissionMode = PermissionModeEnum.ROLE } = appStore.getProjectConfig;
 
     // role permissions
     if (permissionMode === PermissionModeEnum.ROLE) {
@@ -98,13 +98,13 @@ class Permission extends VuexModule {
         if (!roles) return true;
         return roleList.some((role) => roles.includes(role));
       });
-      //  如果确定不需要做后台动态权限,请将下面整个判断注释
+      //  If you are sure that you do not need to do background dynamic permissions, please comment the entire judgment below
     } else if (permissionMode === PermissionModeEnum.BACK) {
       createMessage.loading({
         content: t('sys.app.menuLoading'),
         duration: 1,
       });
-      // 这里获取后台路由菜单逻辑自行修改
+      // Here to get the background routing menu logic to modify by yourself
       const paramId = id || userStore.getUserInfoState.userId;
       if (!paramId) {
         throw new Error('paramId is undefined!');
@@ -112,9 +112,9 @@ class Permission extends VuexModule {
       let routeList = (await getMenuListById({ id: paramId })) as AppRouteRecordRaw[];
       console.log(routeList);
 
-      // 动态引入组件
+      // Dynamically introduce components
       routeList = transformObjToRoute(routeList);
-      //  后台路由转菜单结构
+      //  Background routing to menu structure
       const backMenuList = transformRouteToMenu(routeList);
 
       this.commitBackMenuListState(backMenuList);
