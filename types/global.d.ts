@@ -61,3 +61,31 @@ declare type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElR
 declare type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 
 type IsSame<A, B> = A | B extends A & B ? true : false;
+
+declare interface ChangeEvent extends Event {
+  target: HTMLInputElement;
+}
+
+declare interface WheelEvent {
+  path?: EventTarget[];
+}
+
+interface ImportMetaEnv extends ViteEnv {
+  __: unknown;
+}
+
+declare interface ViteEnv {
+  VITE_PORT: number;
+  VITE_USE_MOCK: boolean;
+  VITE_USE_PWA: boolean;
+  VITE_PUBLIC_PATH: string;
+  VITE_PROXY: [string, string][];
+  VITE_GLOB_APP_TITLE: string;
+  VITE_GLOB_APP_SHORT_NAME: string;
+  VITE_USE_CDN: boolean;
+  VITE_DROP_CONSOLE: boolean;
+  VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
+  VITE_LEGACY: boolean;
+  VITE_USE_IMAGEMIN: boolean;
+  VITE_GENERATE_UI: string;
+}

@@ -1,5 +1,4 @@
 import type { Plugin } from 'vite';
-import type { ViteEnv } from '../../utils';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -16,6 +15,8 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configWindiCssPlugin } from './windicss';
+import { configSvgIconsPlugin } from './svgSprite';
+import { configHmrPlugin } from './hmr';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const { VITE_USE_IMAGEMIN, VITE_USE_MOCK, VITE_LEGACY, VITE_BUILD_COMPRESS } = viteEnv;
@@ -27,11 +28,17 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     vueJsx(),
   ];
 
+  // TODO
+  !isBuild && vitePlugins.push(configHmrPlugin());
+
   // @vitejs/plugin-legacy
   VITE_LEGACY && isBuild && vitePlugins.push(legacy());
 
   // vite-plugin-html
   vitePlugins.push(configHtmlPlugin(viteEnv, isBuild));
+
+  // vite-plugin-svg-icons
+  vitePlugins.push(configSvgIconsPlugin(isBuild));
 
   // vite-plugin-windicss
   vitePlugins.push(configWindiCssPlugin());
@@ -43,7 +50,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   vitePlugins.push(PurgeIcons());
 
   // vite-plugin-style-import
-  vitePlugins.push(configStyleImportPlugin());
+  vitePlugins.push(configStyleImportPlugin(isBuild));
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig());

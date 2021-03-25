@@ -1,5 +1,5 @@
-import type { UserInfo } from '/@/store/modules/user';
-import type { LockInfo } from '/@/store/modules/lock';
+import type { LockInfo, UserInfo } from '/@/store/types';
+
 import { ProjectConfig } from '/#/config';
 
 import { createLocalStorage, createSessionStorage } from '/@/utils/cache';
@@ -69,7 +69,7 @@ export class Persistent {
 
   static setSession(key: SessionKeys, value: SessionStore[SessionKeys], immediate = false): void {
     sessionMemory.set(key, toRaw(value));
-    immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory);
+    immediate && ss.set(APP_SESSION_CACHE_KEY, sessionMemory.getCache);
   }
 
   static removeSession(key: SessionKeys): void {

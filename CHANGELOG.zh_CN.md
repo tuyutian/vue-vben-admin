@@ -1,5 +1,81 @@
 ## Wip
 
+### ✨ Features
+
+- 路由新增 hideChildrenInMenu 配置。用于隐藏子菜单
+- 树形表格内置展开/折叠全部函数
+
+### ✨ Refactor
+
+- 重构路由多层模式,解决嵌套 keepalive 执行多次问题
+
+### 🐛 Bug Fixes
+
+- 确保 CountDownInput 组件重置清空值
+- 修复分割模式下在小屏幕中显示问题
+- 修复表格高度计算问题
+- 修复后台路由获取不到组件问题
+- 修复 Modal 组件 loadingTip 配置不生效
+- 修复后台权限指令不生效
+- 确保 progress 进度条正确关闭
+- 修复表格勾选列配置失效问题
+- 确保一级菜单可以被隐藏
+
+### 🎫 Chores
+
+- 移除 ls-lint
+
+## 2.1.0 (2021-03-15)
+
+### ✨ Features
+
+- 图标选择器新增 svg 模式
+- 新增时间组件
+- 新增高德/百度/谷歌地图示例
+
+### ✨ Refactor
+
+- 重构项目以解决循环依赖项导致的热更新问题
+- 移除 vueHelper/useClickoutside,使用@vueuse/core 代替
+
+### 🐛 Bug Fixes
+
+- 确保 `table action` 的值被正确更新
+- 修复页面切换的动画无法关闭
+- 修复`PageWrapper`title 不显示
+- 修复表格已知问题
+- 修复 BasicTree 组件不能自定义 title 问题
+- 修复主题切换后按钮样式问题
+
+## 2.0.3 (2021-03-07)
+
+### ✨ Features
+
+- `BasicTree` 新增`clickRowToExpand`,用于单击树节点展开
+- 新增 SvgIcon 插件及示例
+- 账号管理界面增加左侧部门树·
+
+### ⚡ Performance Improvements
+
+- 表格关闭分页时不再携带分页参数
+- 登录页监听回车事件进行登录
+- 当表格设置自适应大小时,根据屏幕来铺满了高度.
+- Tree 滚动条优化
+- 优化本地开发加载速度
+
+### 🐛 Bug Fixes
+
+- 修复`Description`已知问题
+- 修复`BasicForm`已知问题
+- 修复`BasicTree`下 ActionItem 的 show 属性逻辑问题
+- 修复树组件 demo 示例样式错误
+- 修复账号管理新增未清空旧数据
+- form 组件应允许 setFieldsValue 方法值为 null 或者 undefined
+- 确保单级面包屑正确跳转
+- 确保 Form 组件不校验隐藏的表单项
+
+## 2.0.2 (2021-03-04)
+
 ### ✨ Refactor
 
 - 重构多语言模块,支持懒加载及远程加载
@@ -8,11 +84,11 @@
 
 - axios 支持 form-data 格式请求
 - 新增图标选择器组件(支持本地和在线方式)
-- 新增修改密码界面
-- 新增部门管理示例界面
 - 新增 WebSocket 示例和服务脚本
-- BasicTree 组件新增 `renderIcon` 属性用于控制层级图标显示
-- BasicTree->actionItem 新增 show 属性，用于动态控制按钮显示
+- Tree 组件新增 `renderIcon` 属性用于控制层级图标显示
+- Tree->actionItem 新增 show 属性，用于动态控制按钮显示
+- Tree 新增工具栏/title/搜索功能
+- 新增部门管理/修改密码/账号管理/角色管理/菜单管理示例界面
 
 ### ⚡ Performance Improvements
 
@@ -28,6 +104,7 @@
 - 修复表格不能正确的获取选中行
 - 修复全屏状态下 modal 高度计算错误
 - 修复部分表格样式问题
+- 修复树形表格 `indentSize`设置失效
 
 ## 2.0.1 (2021-02-21)
 
