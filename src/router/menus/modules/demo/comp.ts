@@ -117,15 +117,19 @@ const menu: MenuModule = {
         ],
       },
       {
+        path: 'cropper',
+        name: t('routes.demo.comp.cropperImage'),
+        tag: {
+          content: 'new',
+        },
+      },
+      {
         path: 'countTo',
         name: t('routes.demo.comp.countTo'),
       },
       {
         path: 'timestamp',
         name: t('routes.demo.comp.time'),
-        tag: {
-          content: 'new',
-        },
       },
       {
         path: 'transition',
@@ -163,10 +167,7 @@ const menu: MenuModule = {
       {
         path: 'tree',
         name: t('routes.demo.comp.tree'),
-        tag: {
-          dot: true,
-          type: 'warn',
-        },
+
         children: [
           {
             path: 'basic',
@@ -175,10 +176,6 @@ const menu: MenuModule = {
           {
             path: 'editTree',
             name: t('routes.demo.comp.editTree'),
-            tag: {
-              dot: true,
-              type: 'warn',
-            },
           },
           {
             path: 'actionTree',

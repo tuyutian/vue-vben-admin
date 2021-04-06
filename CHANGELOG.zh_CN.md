@@ -2,6 +2,26 @@
 
 ### ✨ Features
 
+- 新增`headerTitle` slot
+- 新增打印示例
+- 新增关于界面
+
+### ✨ Refactor
+
+- 移除 useFullScreen 函数
+- tinymce 由 Cdn 改为 npm(打包体积偏大)
+- Dashboard 重构
+
+### 🐛 Bug Fixes
+
+- 确保面包屑正确的显示图标
+- 修复 tinymce 上传按钮全屏模式下消失问题
+- 确保 title 在重新登录后正常改变
+
+## 2.1.1 (2021-03-26)
+
+### ✨ Features
+
 - 路由新增 hideChildrenInMenu 配置。用于隐藏子菜单
 - 树形表格内置展开/折叠全部函数
 
@@ -20,6 +40,7 @@
 - 确保 progress 进度条正确关闭
 - 修复表格勾选列配置失效问题
 - 确保一级菜单可以被隐藏
+- 确保表单隐藏字段校验正常
 
 ### 🎫 Chores
 

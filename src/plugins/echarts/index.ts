@@ -1,6 +1,13 @@
 import * as echarts from 'echarts/core';
 
-import { BarChart, LineChart, PieChart, MapChart, PictorialBarChart } from 'echarts/charts';
+import {
+  BarChart,
+  LineChart,
+  PieChart,
+  MapChart,
+  PictorialBarChart,
+  RadarChart,
+} from 'echarts/charts';
 
 import {
   TitleComponent,
@@ -9,11 +16,14 @@ import {
   PolarComponent,
   AriaComponent,
   ParallelComponent,
+  LegendComponent,
+  RadarComponent,
 } from 'echarts/components';
 
 import { SVGRenderer } from 'echarts/renderers';
 
 echarts.use([
+  LegendComponent,
   TitleComponent,
   TooltipComponent,
   GridComponent,
@@ -24,8 +34,10 @@ echarts.use([
   LineChart,
   PieChart,
   MapChart,
+  RadarChart,
   SVGRenderer,
   PictorialBarChart,
+  RadarComponent,
 ]);
 
 export default echarts;

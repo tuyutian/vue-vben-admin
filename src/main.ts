@@ -1,14 +1,6 @@
 import '/@/design/index.less';
 import '@virtual/windi.css';
 
-// Do not introduce` on-demand in local development?
-// In the local development for on-demand introduction, the number of browser requests will increase by about 20%.
-// Which may slow down the browser refresh.
-// Therefore, all are introduced in local development, and only introduced on demand in the production environment
-if (import.meta.env.DEV) {
-  import('ant-design-vue/dist/antd.less');
-}
-
 import { createApp } from 'vue';
 import App from './App.vue';
 
@@ -25,7 +17,13 @@ import '/@/router/guard';
 // Register icon Sprite
 import 'vite-plugin-svg-icons/register';
 
-import { isDevMode } from '/@/utils/env';
+// Do not introduce` on-demand in local development?
+// In the local development for on-demand introduction, the number of browser requests will increase by about 20%.
+// Which may slow down the browser refresh.
+// Therefore, all are introduced in local development, and only introduced on demand in the production environment
+if (import.meta.env.DEV) {
+  import('ant-design-vue/dist/antd.less');
+}
 
 (async () => {
   const app = createApp(App);
@@ -48,13 +46,12 @@ import { isDevMode } from '/@/utils/env';
   setupErrorHandle(app);
 
   // Mount when the route is ready
+  // https://next.router.vuejs.org/api/#isready
   await router.isReady();
 
   app.mount('#app', true);
 
-  // The development environment takes effect
-  if (isDevMode()) {
-    // app.config.performance = true;
+  if (import.meta.env.DEV) {
     window.__APP__ = app;
   }
 })();
